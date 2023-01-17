@@ -71,5 +71,18 @@ Alkuperäinen painike mikä näkyi virtualboxin palkissa katosi. En pysty enää
 
 12: Debian distro asenettu virtuaalikoneelle
 
-	Huomio: Resoluutio ei ole silmämielyttävä. Korjaa se Virtualboxin kautta
+	Huomio: Resoluutio ei ole silmämielyttävä. Korjaa se Virtualboxin kautta. Setting-->display -> 100%
+	
+13: Suorita terminaalissa seuraavat komennot:
+	
+	sudo apt-get update, sudo apt-get -y dist-upgrade, sudo apt-get -y install ufw, sudo ufw enable
+	
+Komentojen jälkeen reboottasin virtuaalikoneen.
+	
+1942
+	
+14: Badabing badabom. Debian Distro on nyt asennettu ja päivitetty. Palomuuri on asetettu.
+
+1945
+
   

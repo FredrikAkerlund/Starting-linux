@@ -4,6 +4,8 @@
 ## Perustiedot
 Alusta: Lenovo ideapad 5 pro, R7 5000 sarja 16gt ram, 500gt SSD
 
+OS: Windows 11
+
 Aika: UTC+2 1800 17/01/23
 
 Sijainti: Helsinki, 00140

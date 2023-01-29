@@ -42,15 +42,15 @@ Logissa tapahtuu seuraavia asioita
 
 -Tämä on web-palvelinlokin merkintä, joka kuvaa yhden HTTP-pyynnön, joka on tehty verkkosivulle. Se sisältää seuraavat tiedot:
 
--IP-osoite: 127.0.0.1
--Käyttäjän tunniste: tyhjä
--Aikaleima: 27. tammikuuta 2023, klo 14:40:13 +0200
--Pyyntö: GET / HTTP/1.1
--Palvelimen vastaus: 200 (HTTP-tilakoodi, joka tarkoittaa onnistunutta pyyntöä)
--Vastauksen pituus: 3380 tavua
--Referer: Tyhjä
--User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0
--Yhteenvetona tämä merkintä kertoo, että IP-osoitteesta 127.0.0.1 lähetettiin onnistunut HTTP-pyyntö verkkosivulle osoitteessa / ja vastauksena saatiin 3380 tavun pituinen sivu. Käyttäjän selain oli Mozilla Firefox versiossa 102.0.
+- IP-osoite: 127.0.0.1
+- Käyttäjän tunniste: tyhjä
+- Aikaleima: 27. tammikuuta 2023, klo 14:40:13 +0200
+- Pyyntö: GET / HTTP/1.1
+- Palvelimen vastaus: 200 (HTTP-tilakoodi, joka tarkoittaa onnistunutta pyyntöä)
+- Vastauksen pituus: 3380 tavua
+- Referer: Tyhjä
+- User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0
+- Yhteenvetona tämä merkintä kertoo, että IP-osoitteesta 127.0.0.1 lähetettiin onnistunut HTTP-pyyntö verkkosivulle osoitteessa / ja vastauksena saatiin 3380 tavun pituinen sivu. Käyttäjän selain oli Mozilla Firefox versiossa 102.0.
 
 ### Apache2 error log
 ![Apache error log](https://user-images.githubusercontent.com/122887178/215347443-0a38d273-da03-4e77-92a3-6a3d3a119ddb.jpg)

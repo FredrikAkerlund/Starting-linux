@@ -42,7 +42,7 @@ Logissa tapahtuu seuraavia asioita
 
 -Tämä on web-palvelinlokin merkintä, joka kuvaa yhden HTTP-pyynnön, joka on tehty verkkosivulle. Se sisältää seuraavat tiedot:
 
-- IP-osoite: 127.0.0.1
+- IP-osoite: 127.0.0.1, (LOCALHOST/Loopback osoite)
 - Käyttäjän tunniste: tyhjä
 - Aikaleima: 27. tammikuuta 2023, klo 14:40:13 +0200
 - Pyyntö: GET / HTTP/1.1
@@ -74,7 +74,7 @@ Logissa tapahtuu seuraavia asioita
 #### Ensimmäinen tapahtuma
 - Tämä on web-palvelinlokin merkintä, joka kuvaa yhden HTTP-pyynnön, joka on tehty verkkosivulle. Se sisältää seuraavat tiedot:
 
-- IP-osoite: 127.0.0.1
+- IP-osoite: 127.0.0.1 (localhost/loopback adress)
 - Käyttäjän tunniste: tyhjä
 - Aikaleima: 29. tammikuuta 2023, klo 20:23:58 +0200
 - Pyyntö: GET / HTTP/1.1
@@ -86,7 +86,7 @@ Logissa tapahtuu seuraavia asioita
 
 #### Toinen tapahtuma
 - Toisessa
-- IP-osoite: 127.0.0.1, joka tarkoittaa, että pyyntö tuli samalta laitteelta, joka ajoi HTTP-palvelinta
+- IP-osoite: 127.0.0.1, (localhost/loopback osoite) joka tarkoittaa, että pyyntö tuli samalta laitteelta, joka ajoi HTTP-palvelinta (oma kone, ei verkon ulkopuolelta)
 - Käyttäjä: -, eli pyyntö ei ollut autentikoitu
 - Aikaleima: 29. tammikuuta 2023, klo 20:23:58 +0200
 - Pyyntö: "GET /teentuhmuuksiajotaensaatehda HTTP/1.1"

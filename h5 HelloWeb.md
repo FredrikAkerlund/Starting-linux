@@ -50,8 +50,8 @@ Koska `public_html` on tyhjä hakemisto selain ohjasi minut `index of /~fredrikt
 Saadakseni haluamani kotisivu näkyviin loin uuden tiedoston `public_html` Hakemistoon
 
       micro index.html
-      
-      - Tiedostoon kirjoitin `Moro teretulemast mun sivuille`
+      Tiedostoon kirjoitin `Teretulemast mun sivulle`
+      Alla oleva kuva on toisen käyttäjän index sivulta
 
 
 ![Teretulemast](https://user-images.githubusercontent.com/122887178/215849350-54b4d932-5cd1-4952-be96-c4a52599138c.jpg)
@@ -69,8 +69,7 @@ HUOM! Index hakemisto tuli näkyviin `localhost/~fredriktest` koska loin tämän
 
 ![Kotisivu](https://user-images.githubusercontent.com/122887178/215851216-42748896-86f2-4856-8ee7-d485d3fa5f67.jpg)
 
-HUOM! Alkuperäinen sivu jonka koodasi meni rikki koska irroitin yksittäisen HTML tiedoston hakemistosta. Tiedostossa oli linkkejä ja viittauksia jotka vaativat muita tiedostoja toimiakseen. `fredrik` hakemistoon olin jo luonnut `index.html` tiedoston.
-
+HUOM! Alkuperäinen sivu jonka koodasi meni rikki koska irroitin yksittäisen HTML tiedoston hakemistosta. Tiedostossa oli linkkejä ja viittauksia jotka vaativat muita tiedostoja toimiakseen. 
 
 ### Uuden käyttäjän luonti
 

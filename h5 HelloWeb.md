@@ -67,6 +67,8 @@ HUOM! Minulla oli tässä vaiheessa jo luotu uusi käyttäjä nimeltä `fredrikt
 
 ![Kotisivu](https://user-images.githubusercontent.com/122887178/215851216-42748896-86f2-4856-8ee7-d485d3fa5f67.jpg)
 
+HUOM! Alkuperäinen sivu jonka koodasi meni rikki koska irroitin yksittäisen HTML tiedoston hakemistosta. Tiedostossa oli linkkejä ja viittauksia jotka vaativat muita tiedostoja toimiakseen.
+
 
 ### Uuden käyttäjän luonti
 

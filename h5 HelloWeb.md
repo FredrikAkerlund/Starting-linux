@@ -41,6 +41,8 @@ Saadakseni testisivun pois käytöstä tein seuraavat toimenpiteet:
 
 Saadakseni käyttäjän kotisivun käyttöön minun piti luoda kansio nimeltä `public_html` käyttäjän kotihakemistoon `/home/fredriktest`
 
+
+
 Koska `public_html` on tyhjä hakemisto selain ohjasi minut `index of /~fredriktest sivulle`
 
 ![Fredriktest](https://user-images.githubusercontent.com/122887178/215848818-c2824287-9f2d-4ed9-8b52-f37b6ee24e36.jpg)
@@ -54,7 +56,7 @@ Saadakseni haluamani kotisivu näkyviin loin uuden tiedoston `public_html` Hakem
 
 ![Teretulemast](https://user-images.githubusercontent.com/122887178/215849350-54b4d932-5cd1-4952-be96-c4a52599138c.jpg)
 
-HUOM! Minulla oli tässä vaiheessa jo luotu uusi käyttäjä nimeltä `fredriktest`. Tästä syystä käytin kahta hakemistoa
+HUOM! Index hakemisto tuli näkyviin `localhost/~fredriktest` koska loin tämän käyttäjän aikasemmin enkä ollut lisännyt sinne mitään index.html
 
 ### Validoidun HTML5 sivun luominen weppipalvelimelle
 

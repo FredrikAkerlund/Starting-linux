@@ -2,7 +2,7 @@
 
 ### Capturing a Valuable Market from the Bottom Up with Amjad Masad of Replit
 #### Indiehackers podcast jossa vieraana Replit palvelun perustaja ja toimitusjohtaja Amjad Masad
-Julkaistu 12 Jan 2022
+Julkaistu 12 Jan 2022, Jakson kesto 37min, Kuunneltu Spotifyssa 01/02/23
 
 Podcastissa Indie Hackersin Allen Courtland haastattelee miten Amjad Masad on luonnut palvelun Replit.<br>
 Replit on selainpohjainen ympäristö jossa aloittelevat sekä kokeneemmat koodaajat pystyvät tuottamaan, jakaamaan ja kehittämään omia projekteja.

@@ -1,5 +1,33 @@
 # HelloWeb
 
+### Capturing a Valuable Market from the Bottom Up with Amjad Masad of Replit
+#### Indiehackers podcast jossa vieraana Replit palvelun perustaja ja toimitusjohtaja Amjad Masad
+Julkaistu 12 Jan 2022
+
+Podcastissa Indie Hackersin Allen Courtland haastattelee miten Amjad Masad on luonnut palvelun Replit.<br>
+Replit on selainpohjainen ympäristö jossa aloittelevat sekä kokeneemmat koodaajat pystyvät tuottamaan, jakaamaan ja kehittämään omia projekteja.
+
+
+Amjad Masad varttui Jordaniassa jossa hän nuorena poikana tutustui tietokoneisiin isänsä kautta. 
+Jo kuusi vuotiaana Amjad aloitti kehittäjän uransa.
+Replit alkoi open source projektina jonka tarkoitus oli luodan nettipohjaisen ohjelmointiympäristön aloitteleville kehittäjille, jossa he voivat luoda ja kehittää omia palvelujaan.
+
+
+Kehittäessä Replittiä Amjadin tarkoitus ei ollut kilpailla suurten toimijoiden kanssa vaan tarjota matalan tason koodajille oman alustan. Kun Replittiä kehitettiin suuret yritykset hallitsivat markkinoita. Näiden suurien yrityksen kohdeyleisö oli teollisuusyrittäjät ja muut korkean tason pelaajat.
+
+
+Suuren suosion myötä Replitistä kasvoi suuri yritys ja tänä päivänä on yksi suosituimmista kehittämisympäristöistä.
+Replit toimii Saas (Software as a Service) mallilla. Replit ei toimi Apache palvelimella vaan replit ympäristö toimii itse kehitetyssä palvelin arkitehtuurissa.
+
+Podcastissa Amjad kertoo miten hän uransa aikana joutui luopumaan kehittämisestä, missä hän oli parhaimillaa, ja joutui keskittymään enemmän johtamiseen, hallintoon ja toimimaan toimitusjohtajana. Replitin tie ei ollut täysin ruusuinen. Replitin kasvun myötä alusta joutui hackereiden kohteeksi. Amjad kertoo miten hän joutui taistelemaan eri hyökkäyksiä vastaan vuorokauden ympäri.
+
+
+
+
+
+
+## Apache webbipalvelun käyttöönotto 
+
 ### Aloitus
 
 Aloitin poistamalla apache weppipalvelimen

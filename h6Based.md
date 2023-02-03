@@ -102,7 +102,7 @@ Etsiäkseni virheitä luon ensin sellaisen.
                               AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message
                               Syntax OK
                               
-- Virheloki kertoo suoraan että /public.sites ei ole olemassa.
+- Virheloki kertoo suoraan että `/home/fredrik/public.sites/` ei ole olemassa.
 - Toinen virhe johtunee siitä että loopback osoite ei ole hyväksytty domain nimi. Virheloki antaa myös suoraan ehdotuksen mitä voin tehdä asialle.
 
 ### Lähteet 

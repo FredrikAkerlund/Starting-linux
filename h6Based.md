@@ -105,11 +105,75 @@ Etsiäkseni virheitä luon ensin sellaisen.
 - Virheloki kertoo suoraan että `/home/fredrik/public.sites/` ei ole olemassa.
 - Toinen virhe johtunee siitä että loopback osoite ei ole hyväksytty domain nimi. Virheloki antaa myös suoraan ehdotuksen mitä voin tehdä asialle.
 
+
+### 2 nimipohjaisen palvelimen luonti
+
+- Aloitan lukemalla avoimesta verkosta oppaita ja keskustelufoorumista. etsin hakusanoilla ` How to make 2 name based servers on apache running on loopback address` 
+- Löysin seuraavan sivun: `https://www.clickittech.com/tutorial/emulate-hosts-file-dns-trick/` seuraan sen ohjeita
+
+			sudo micro /etc/hosts
+
+-lisään tiedostoon uuden Host nimen
+
+			# Host addresses
+			127.0.0.1  localhost
+			127.0.1.1  hiekkis
+			127.0.0.1  foo.example.com ##Lisäsin tämän rivin
+			::1        localhost ip6-localhost ip6-loopback
+			ff02::1    ip6-allnodes
+			ff02::2    ip6-allrouters
+- Tallennan tiedoston ja kokeilen curlilla päästä sivulle
+
+				curl foo.example.com
+- Tämä onnistui suoraan. Oletin että olisi pitänyt käynnistää apache2 prosessi uudestaan mutta ei ollut tarvetta.
+
+![foo example](https://user-images.githubusercontent.com/122887178/216754766-9d5a8755-6703-46ca-b3f9-7f8116f72ce4.jpg)
+
+- Seuraavaksi teen uuden host lisäyksen tiedostoon `/etc/hosts/`
+
+				# Host addresses
+				127.0.0.1  localhost
+				127.0.1.1  hiekkis
+				127.0.0.1  foo.example.com
+				127.0.0.1  bar.example.com ##Lisäsin tämän rivin
+				::1        localhost ip6-localhost ip6-loopback
+				ff02::1    ip6-allnodes
+				ff02::2    ip6-allrouters
+- Sain saman tuloksen kun aikasemmin. 
+- Lisäämällä nimiä `/etc/Hosts` tiedostoon simuloin DNS palvelua.
+
+- Kokeilin lisätä `/etc/apache2/sites-available/frontpage.conf` viittauksen toiseen kotihakemistoon foo.example.com sivustolle
+
+						<VirtualHost *:80>
+				DocumentRoot /home/fredrik/public_sites/
+				<Directory /home/fredrik/public_sites/>
+					require all granted
+				</Directory>
+			</VirtualHost>
+			## Iisäsin tämän <foo.example.com:80>
+				DocumentRoot /home/fredrik/public_sites1/
+				<Directory /home/fredrik/public_sites1/>
+					require all granted
+				</Directory>
+			</foo.example.com>	
+- Käynnistän APache2 uudestaan
+- Seuraavat virhe lokit tulivat suoraan vastaan: 
+![Example virheloki](https://user-images.githubusercontent.com/122887178/216755256-09b5ee4c-2a07-4693-b830-c6910f753c54.jpg)
+- Aikani ei riittänyt selvittää ongelmaa mutta oletan että viittaukset jotka tein `/etc/apache2/sites-available/frontpage.conf` on väärin tehty
+- Tavoitteeni oli saada joka sivulle oma kotisivu hakemisto. Taitoni ei tähän riittänyt.
+- 
+- Poistin lisäykseni `/etc/apache2/sites-available/frontpage.conf` ja sivut toimivat taas
+
+
+
+
 ### Lähteet 
 https://httpd.apache.org/docs/2.4/getting-started.html
 
 https://terokarvinen.com/2023/linux-palvelimet-2023-alkukevat/
 
 https://httpd.apache.org/docs/current/vhosts/name-based.html
+
+https://www.clickittech.com/tutorial/emulate-hosts-file-dns-trick/
 
 

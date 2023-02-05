@@ -129,7 +129,7 @@ Etsiäkseni virheitä luon ensin sellaisen.
 
 ![foo example](https://user-images.githubusercontent.com/122887178/216754766-9d5a8755-6703-46ca-b3f9-7f8116f72ce4.jpg)
 
-- Seuraavaksi teen uuden host lisäyksen tiedostoon `/etc/hosts/`
+-   Seuraavaksi teen uuden host lisäyksen tiedostoon `/etc/hosts/`
 
 				# Host addresses
 				127.0.0.1  localhost
@@ -141,6 +141,7 @@ Etsiäkseni virheitä luon ensin sellaisen.
 				ff02::2    ip6-allrouters
 - Sain saman tuloksen kun aikasemmin. 
 - Lisäämällä nimiä `/etc/Hosts` tiedostoon simuloin DNS palvelua.
+### Omien kotisivujen luominen omille sivustoille
 
 - Kokeilin lisätä `/etc/apache2/sites-available/frontpage.conf` viittauksen toiseen kotihakemistoon foo.example.com sivustolle
 
@@ -163,7 +164,7 @@ Etsiäkseni virheitä luon ensin sellaisen.
 - Tavoitteeni oli saada joka sivulle oma kotisivu hakemisto. Taitoni ja aikani ei tähän riittänyt.
 - Poistin lisäykseni `/etc/apache2/sites-available/frontpage.conf` ja sivut toimivat taas
 
- 
+ ### Jatkumoa sivujen omien kotisivujen luomisessa
  
 - Jatkoin ongelman ratkaisua myöhemällä ajalla:
 - Löysin sivuston `https://opensource.com/article/18/3/configuring-multiple-web-sites-apache` missä kerrotaan miten lisätään kotihakemistoja eri sivustoille.
@@ -178,7 +179,7 @@ Etsiäkseni virheitä luon ensin sellaisen.
 			    		</Directory>    
 			</VirtualHost>
 - Kokeilin toimiko muutokset.
-- Muutokset ei aiheuttanut muutoksia kotisivuun.
+- Muutokset ei aiheuttanut muutoksia kotisivuun. `foo.example.com` käytti samaa kotisivua kuin localhost
 - Käytin komentoa `sudo a2ensite foo.example.com.conf`
 - Käynnistin uudestaan apache palvelun `sudo Systemctl restart apache2`
 - Tajusin että en ole luonnut kansiota `/home/fredrik/public_foo`. Loin sen ja lisäsin tiedoston nimeltä index.html hakemistoon.
@@ -191,7 +192,7 @@ Etsiäkseni virheitä luon ensin sellaisen.
 - Tässä lopputulos:
 ![Omat kotisivut eri hosteille](https://user-images.githubusercontent.com/122887178/216836952-3d1000bc-42ac-4e58-9049-f15b118a511d.jpg)
 
-- Tehdessäni tätä "lisätehtävää" törmäsin useaan ongelmaan. Ratkaisin nämä ongelmat samalla tavalla kuin tein kohdassa "Vian selvittäminen"
+- Tehdessäni tätä "bonus lisätehtävää" törmäsin useaan ongelmaan. Ratkaisin nämä ongelmat samalla tavalla kuin tein kohdassa "Vian selvittäminen"
 - Tein asiat nopeasti enkä kirjoittanut raporttia asiasta. Jälkeenpäin ajatellen olisi pitänyt jotta ongelmaa olisi voinnut ratkaista myöhemmin ja analysoida tarkemmin mitä tein
 			
 

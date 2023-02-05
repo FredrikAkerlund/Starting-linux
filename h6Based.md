@@ -160,12 +160,40 @@ Etsiäkseni virheitä luon ensin sellaisen.
 - Seuraavat virhe lokit tulivat suoraan vastaan: 
 ![Example virheloki](https://user-images.githubusercontent.com/122887178/216755256-09b5ee4c-2a07-4693-b830-c6910f753c54.jpg)
 - Aikani ei riittänyt selvittää ongelmaa mutta oletan että viittaukset jotka tein `/etc/apache2/sites-available/frontpage.conf` on väärin tehty
-- Tavoitteeni oli saada joka sivulle oma kotisivu hakemisto. Taitoni ei tähän riittänyt.
-- 
+- Tavoitteeni oli saada joka sivulle oma kotisivu hakemisto. Taitoni ja aikani ei tähän riittänyt.
 - Poistin lisäykseni `/etc/apache2/sites-available/frontpage.conf` ja sivut toimivat taas
 
+ 
+ 
+- Jatkoin ongelman ratkaisua myöhemällä ajalla:
+- Löysin sivuston `https://opensource.com/article/18/3/configuring-multiple-web-sites-apache` missä kerrotaan miten lisätään kotihakemistoja eri sivustoille.
+- loin hakemistoon `/etc/apache2/sites-available/` tiedoston nimeltä `foo.example.com.conf`
+- Tiedostoon kirjoitin seuraavan:
 
+			<VirtualHost *:80>
+				ServerName foo.example.com
+				DocumentRoot /home/fredrik/public_foo/
+					<Directory /home/fredrik/public_foo>
+					Require all granted
+			    		</Directory>    
+			</VirtualHost>
+- Kokeilin toimiko muutokset.
+- Muutokset ei aiheuttanut muutoksia kotisivuun.
+- Käytin komentoa `sudo a2ensite foo.example.com.conf`
+- Käynnistin uudestaan apache palvelun `sudo Systemctl restart apache2`
+- Tajusin että en ole luonnut kansiota `/home/fredrik/public_foo`. Loin sen ja lisäsin tiedoston nimeltä index.html hakemistoon.
+- Käytin komentoa curl foo.example.com. Sain tuloksen
 
+				fredrik@hiekkis:/etc/apache2/sites-available$ curl foo.example.com
+				Foo.example.com kotisivu
+
+- Tein samat toimenpiteet `bar.example.com` sekä `localhost` sivuille.
+- Tässä lopputulos:
+![Omat kotisivut eri hosteille](https://user-images.githubusercontent.com/122887178/216836952-3d1000bc-42ac-4e58-9049-f15b118a511d.jpg)
+
+- Tehdessäni tätä "lisätehtävää" törmäsin useaan ongelmaan. Ratkaisin nämä ongelmat samalla tavalla kuin tein kohdassa "Vian selvittäminen"
+- Tein asiat nopeasti enkä kirjoittanut raporttia asiasta. Jälkeenpäin ajatellen olisi pitänyt jotta ongelmaa olisi voinnut ratkaista myöhemmin ja analysoida tarkemmin mitä tein
+			
 
 ### Lähteet 
 https://httpd.apache.org/docs/2.4/getting-started.html
@@ -175,5 +203,7 @@ https://terokarvinen.com/2023/linux-palvelimet-2023-alkukevat/
 https://httpd.apache.org/docs/current/vhosts/name-based.html
 
 https://www.clickittech.com/tutorial/emulate-hosts-file-dns-trick/
+
+https://opensource.com/article/18/3/configuring-multiple-web-sites-apache
 
 

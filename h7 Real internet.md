@@ -178,5 +178,87 @@ individual files in /usr/share/doc/*/copyright.
             Feb 08 14:54:41 localhost systemd[1]: Failed to start The Apache HTTP Server.
             
 - Jatkan selvittelyä
-             
+- 2h jälkeen jatkoin vian selvittämistä
+- Annoin komennon `sudo apache2ctl configtest` joka antoi minulle eväitä miten ratkaisen ongelman.
+
+                AH00112: Warning: DocumentRoot [/home/sandbox/public.sites] does not exist
+                AH00526: Syntax error on line 3 of /etc/apache2/sites-enabled/frontpage.conf:
+                <Directory> directive missing closing '>'
+                Action 'configtest' failed.
+                The Apache error log may have more information.
+                
+- Luon kansion `/home/sandbox/public.sites` ja kansioon sisälle tiedoston `index.html` missä on sisältöä
+
+                mkdir /home/sandbox/public.sites
+                micro index.html
+- Kokeilen toimiiko weppipalvelin
+
+                curl 143.42.57.220
+                curl: (7) Failed to connect to 143.42.57.220 port 80: Connection refused        
+- Kokeilin käynnistää uudestaan apache2
+
+                sudo systemctl restart apache2
+                Job for apache2.service failed because the control process exited with error code.
+                See "systemctl status apache2.service" and "journalctl -xe" for details.
+- Korjaan `/etc/apache2/sites-enabled/frontpage.conf`. Aikasemmin `apache2ctl configtest` antoi virheilmoituksen syntaxissa rivillä kolme
+
+                <VirtualHost *:80>
+                    DocumentRoot /home/sandbox/public.sites
+                     <Directory /home/sandbox/public.sites> ## Tästä puuttui sulku
+                       Require all granted
+                     </Directory>
+                  </VirtualHost>
+- Kokeilen uudestaan käynnistää apache2 processin 
+- Tämä ei antanut virheilmoituksia.
+- Kokeilen seuraavaksi kotisivujen toimivuutta
+
+                curl 143.42.57.220
+                Moi
+- Weppipalvelin näyttää minulle alkuperäisen kotisivun joka sijaitsee `/var/www/public_html`
+
+- Hakemistosta `/etc/apache2/sites-enabled` näen että 2 sivustoa on enabloiduttu
+                
+                sandbox@localhost:/etc/apache2/sites-enabled$ ls
+                000-default.conf  frontpage.conf
+- Poistan 000-default.conf enabloiduista sivuista
+
+                sudo a2dissite 000-default.conf
+- Käynnistän apachen uudestaan ja kokeilen muuttuiko kotisivu.
+                
+                sandbox@localhost:/etc/apache2/sites-enabled$ curl 143.42.57.220
+                Normaalikäyttäjän etusivu
+- Avaan saman kotisivun toisen koneen selaimella.
+- Tämä toimii. Sivu näyttää nyt oikean muutetun kotisivun
+- Lopuksi vaihdan kotisivun sisällön silmää mielyttäväksi.
+                
 ### Murtoyritysten havaitseminen
+
+- Aloitin etsimällä tieto netistä. Löysin sivun `https://www.tecmint.com/find-failed-ssh-login-attempts-in-linux/`
+- Avaan tiedoston `/var/log/auth.log`
+- Tiedostosta löytyy useita kirjautumis yrityksiä root käyttäjälle.
+
+                Feb  8 17:38:12 localhost sshd[8536]: Connection closed by authenticating user root 69.50.138.96 port 49555 [preauth]
+                Feb  8 17:38:12 localhost sshd[8499]: Connection closed by invalid user yan 69.50.138.96 port 49509 [preauth]
+                Feb  8 17:38:12 localhost sshd[8498]: Connection closed by invalid user steam 69.50.138.96 port 49537 [preauth]
+                Feb  8 17:38:13 localhost sshd[8513]: Connection closed by invalid user ly 69.50.138.96 port 49521 [preauth]
+                Feb  8 17:38:13 localhost sshd[8512]: Connection closed by invalid user abc 69.50.138.96 port 49516 [preauth]
+                Feb  8 17:38:13 localhost sshd[8500]: Connection closed by invalid user king 69.50.138.96 port 49534 [preauth]
+                Feb  8 17:38:13 localhost sshd[8496]: Connection closed by invalid user admin 69.50.138.96 port 49532 [preauth]
+                Feb  8 17:38:13 localhost sshd[8531]: Connection closed by invalid user oracle 69.50.138.96 port 49567 [preauth]
+                Feb  8 17:38:13 localhost sshd[8505]: Connection closed by authenticating user daemon 69.50.138.96 port 49551 [preauth]
+                Feb  8 17:38:13 localhost sshd[8497]: Connection closed by invalid user user 69.50.138.96 port 49523 [preauth]
+                Feb  8 17:38:13 localhost sshd[8507]: Connection closed by invalid user odoo15 69.50.138.96 port 49507 [preauth]
+                Feb  8 17:38:13 localhost sshd[8523]: Connection closed by invalid user jason 69.50.138.96 port 49533 [preauth]
+                Feb  8 17:38:13 localhost sshd[8514]: Connection closed by invalid user emqx 69.50.138.96 port 49530 [preauth]
+                Feb  8 17:38:13 localhost sshd[8525]: Connection closed by invalid user user 69.50.138.96 port 49545 [preauth]
+                Feb  8 17:38:13 localhost sshd[8494]: Connection closed by invalid user guest 69.50.138.96 port 49529 [preauth]
+                Feb  8 17:38:13 localhost sshd[8537]: Connection closed by invalid user tomcat 69.50.138.96 port 49558 [preauth]
+                Feb  8 17:38:13 localhost sshd[8538]: Connection closed by invalid user posiflex 69.50.138.96 port 49549 [preauth]
+                Feb  8 17:38:14 localhost sshd[8530]: Connection closed by invalid user data 69.50.138.96 port 49538 [preauth]
+- Tästä voi vetää sen johtopäätöksen että nämä kirjautumisyritykset ovat automatisoituja. Uskon että nämä käyttäjät kuten `user, jason, tomcat, guest` ovat yleisiä standari käyttäjiä ja näitä yritetään murtaa.
+- Sama IP osoite yrittää monella portilla kirjautua järjestelmään sisään.
+- `/var/log/apache2/access.log` löysin oikeita kirjautumisia minun testisivulle:
+
+                OMAN PUHELIMENI IP - - [08/Feb/2023:17:25:48 +0000] "GET /favicon.ico HTTP/1.1" 404 436 "http://143.42.57.220/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64)                   AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
+                
+- Ylläoleva esimerkki on minun surffailuni omalla puhelimella.

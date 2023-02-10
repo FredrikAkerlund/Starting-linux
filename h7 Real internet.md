@@ -12,6 +12,8 @@ Uuden palvelimen luominen
 - Tietoturvallisuuden parantaminen muuttamalla oletus SSH-porttia
 - Sallittujen porttien ja protokollien määrittely
 - Root-käyttäjän kirjautumisen estäminen
+
+
 Artikkeli tarjoaa yleiskuvan siitä, miten virtuaalipalvelin voidaan asentaa ja miten sitä voidaan suojata alkuperäisestä asennuksesta alkaen.
 
 

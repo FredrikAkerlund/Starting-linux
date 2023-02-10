@@ -8,9 +8,9 @@ Tämä artikkeli kuvaa ensimmäisiä askeleita uuden virtuaalipalvelimen asennuk
 Uuden palvelimen luominen
 - Yhteyden luominen palvelimeen SSH:lla
 - Tarvittavien ohjelmien asentaminen
-- Vinkkejä turvallisuuden parantamiseen, kuten esimerkiksi:
+- Vinkkejä turvallisuuden parantamiseen
 - Tietoturvallisuuden parantaminen muuttamalla oletus SSH-porttia
-- Sallittujen IP-osoitteiden määrittely
+- Sallittujen porttien ja protokollien määrittely
 - Root-käyttäjän kirjautumisen estäminen
 Artikkeli tarjoaa yleiskuvan siitä, miten virtuaalipalvelin voidaan asentaa ja miten sitä voidaan suojata alkuperäisestä asennuksesta alkaen.
 

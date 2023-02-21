@@ -207,9 +207,77 @@ Käytän tehtävässä Tero Karvisen ohjeita. Lähde : https://terokarvinen.com/
                 from.import models
                 admin.site.register(models.Products)# Tämän korjasin
                 # Register your models here.
+- Päivitän selaimen ja huomaan että tietokanta appi `Products` on ilmestynyt sinne mutta tietokanta on nimetty `Productss`.
+
+![image](https://user-images.githubusercontent.com/122887178/220277021-e2b0e8d6-c2c0-46b7-b7e9-076eadbbd3c0.png)
+
+- Seuraavaksi lähden korjaamaan tätä ongelmaa.
+- Nimeän appin hakemiston uudestaan
+
+                (env) fredrik@hiekkis:~/dj_ango/fredrikakerlund$ mv products/ product/
+                
+- Pävitän `apps.py` tiedoston täsmäämään tekemääni muutoksiin
+
+                (env) fredrik@hiekkis:~/dj_ango/fredrikakerlund/product$ cat apps.py 
+                from django.apps import AppConfig
 
 
+                class ProductsConfig(AppConfig):
+                    default_auto_field = 'django.db.models.BigAutoField'
+                    name = 'product'
+                    
+- Päivitän projektin `settings.py` tiedostoon nimen.
 
+                (env) fredrik@hiekkis:~/dj_ango/fredrikakerlund/fredrikakerlund$ micro settings.py
+                        INSTALLED_APPS = [
+                            'django.contrib.admin',
+                            'django.contrib.auth',
+                            'django.contrib.contenttypes',
+                            'django.contrib.sessions',
+                            'django.contrib.messages',
+                            'django.contrib.staticfiles',
+                            'product',
+                             ]
+- Päivitän tietokannan ja kokeilen tuliko muutoksia admin sivulle.
+                
+                (env) fredrik@hiekkis:~/dj_ango/fredrikakerlund$ ./manage.py makemigrations
+                No changes detected
+                (env) fredrik@hiekkis:~/dj_ango/fredrikakerlund$ ./manage.py migrate
+                Operations to perform:
+                  Apply all migrations: admin, auth, contenttypes, product, sessions
+                Running migrations:
+                  Applying product.0001_initial... OK
+                  
+- Päivitän selaimen ja kokeilen uudestaan
+![image](https://user-images.githubusercontent.com/122887178/220281226-a6ac7280-d490-4b13-87b3-89a9ddc0e686.png)
+- Appin nimi on muuttunu mutta tietokanta on vielä väärin.
+- Oletan että tämä johtuu `models.py` tiedoston väärin asettelusta.
+- Poistun tiedostosta `Products` ja korvasin sen `Products`
+                
+                (env) fredrik@hiekkis:~/dj_ango/fredrikakerlund/product$ cat models.py 
+                from django.db import models
+                #Class should always be in singular
+                class Product(models.Model):
+                    name =models.CharField(max_length=300)
+- Korjasin myös admin.py tiedostoon rekisteröinnin admin sivulle täsmäämään oikeata luokkaa.
+
+                (env) fredrik@hiekkis:~/dj_ango/fredrikakerlund/product$ cat admin.py 
+                from django.contrib import admin
+                from.import models
+                admin.site.register(models.Product)# Tämän korjasin
+                # Register your models here.
+                
+- Päivitän selaimen ja kokeilen uudestaan:
+
+![image](https://user-images.githubusercontent.com/122887178/220283023-d1094bed-751b-473c-811a-176e4a3023b9.png)
+- Nyt näyttää oikealta.
+- Kokeilen päästä muokkaamaan tietokantaa `Products`
+![image](https://user-images.githubusercontent.com/122887178/220283777-112fa448-c959-43d9-b3e8-be8b1b2cd03a.png)
+
+- 
+
+
+                
                 
 
                 

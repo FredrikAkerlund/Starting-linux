@@ -274,7 +274,25 @@ Käytän tehtävässä Tero Karvisen ohjeita. Lähde : https://terokarvinen.com/
 - Kokeilen päästä muokkaamaan tietokantaa `Products`
 ![image](https://user-images.githubusercontent.com/122887178/220283777-112fa448-c959-43d9-b3e8-be8b1b2cd03a.png)
 
-- 
+- Mietinnän jälkeen ja tekoäly kyselyjen jälkeen pääsin siihen lopputulemaan että olin unohtanut päivittää tietokannat.
+- Teen tämän: 
+
+                (env) fredrik@hiekkis:~/dj_ango/fredrikakerlund$ ./manage.py makemigrations
+                Was the model product.Products renamed to Product? [y/N] y
+                Migrations for 'product':
+                  product/migrations/0002_rename_products_product.py
+                    - Rename model Products to Product
+                (env) fredrik@hiekkis:~/dj_ango/fredrikakerlund$ ./manage.py migrate
+                Operations to perform:
+                  Apply all migrations: admin, auth, contenttypes, product, sessions
+                Running migrations:
+                  Applying product.0002_rename_products_product... OK
+                  
+- Kokeilen selaimella:
+![image](https://user-images.githubusercontent.com/122887178/220285744-25916da9-98e5-4ccb-bf98-86004fd31467.png)
+-  Tietokanta toimii vihdoinkin.
+
+
 
 
                 

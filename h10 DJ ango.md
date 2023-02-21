@@ -291,11 +291,40 @@ Käytän tehtävässä Tero Karvisen ohjeita. Lähde : https://terokarvinen.com/
 - Kokeilen selaimella:
 ![image](https://user-images.githubusercontent.com/122887178/220285744-25916da9-98e5-4ccb-bf98-86004fd31467.png)
 -  Tietokanta toimii vihdoinkin.
-
-
-
+- Lisään tietokantaa muutaman tuotteen
+![image](https://user-images.githubusercontent.com/122887178/220286205-69f7dcb6-a52d-480b-bbf9-d2af9427b4ad.png)
+- Koska `Product object` näyttää tyhmältä teen muutoksia tietokanta malleihin. Lisäksi lisään malliin hinnan sekä varastotilanteen:
 
                 
+                from django.db import models
+                #Class should always be in singular
+                class Product(models.Model):
+                    name =models.CharField(max_length=300)
+                    price =models.DecimalField(max_digits=10, decimal_places=2) #add price to the products
+                    stock =models.IntegerField(default=0)#add stock available
+    
+
+                    def __str__(self):		#Shows the name in django admin page
+                        return self.name 
                 
+- Päivitän tietokannat
+
+                (env) fredrik@hiekkis:~/dj_ango/fredrikakerlund$ ./manage.py makemigrations
+                Migrations for 'product':
+                  product/migrations/0004_product_stock.py
+                    - Add field stock to product
+                (env) fredrik@hiekkis:~/dj_ango/fredrikakerlund$ ./manage.py migrate
+                Operations to perform:
+                  Apply all migrations: admin, auth, contenttypes, product, sessions
+                Running migrations:
+                  Applying product.0004_product_stock... OK
+
+- Kokeilen selaimella muutoksia
+
+ ![image](https://user-images.githubusercontent.com/122887178/220291014-5aec3ce5-18f6-422b-9dce-bcee5cfacf54.png)
+               
+- Tietokanta on nyt luotu.
+
+
 
                 

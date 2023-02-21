@@ -76,7 +76,7 @@ Käytän tehtävässä Tero Karvisen ohjeita. Lähde : https://terokarvinen.com/
 - Kello on 08:16 kun django oli asennettu
 
 ### DJangon käyttöönotto
-
+Kello 0830
 - Aloitan uuden django projektin nimellä fredrikakerlund
 
                 (env) fredrik@hiekkis:~/dj_ango$ django-admin startproject fredrikakerlund
@@ -324,6 +324,11 @@ Käytän tehtävässä Tero Karvisen ohjeita. Lähde : https://terokarvinen.com/
  ![image](https://user-images.githubusercontent.com/122887178/220291014-5aec3ce5-18f6-422b-9dce-bcee5cfacf54.png)
                
 - Tietokanta on nyt luotu.
+- Kello 1030
+
+### Yhteenveto
+Ongelman ratkaisu oli hieman haastava tehtävässä. Minulla ei ole aikasempaa Python osaamista joten mallien sekä muun kielen ymmärtäminen tuotti hieman ongelmia. Djangon palvelin joka pyöri terminaalissa antoi paljon apua ongelmien selvittämisessä.
+Python asioissa käytin avukseni W3School tehtäviä ja tämä auttoi erittäin paljon.
 
 
 

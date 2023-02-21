@@ -330,6 +330,8 @@ Kello 0830
 Ongelman ratkaisu oli hieman haastava tehtävässä. Minulla ei ole aikasempaa Python osaamista joten mallien sekä muun kielen ymmärtäminen tuotti hieman ongelmia. Djangon palvelin joka pyöri terminaalissa antoi paljon apua ongelmien selvittämisessä.
 Python asioissa käytin avukseni W3School tehtäviä ja tämä auttoi erittäin paljon.
 
+ps. Tein tehtävän Kannattavaa 21.2.23 ja jatkan vapaaehtoista tehtävää myöhemmällä ajalla.
+
 
 
                 

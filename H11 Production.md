@@ -117,6 +117,30 @@ Asennan djangon uuteen virtuaaliympäristöön ja tarkastan versionumeron
 Poistin vanhat django projectit käyttäjän kotihakemistosta. Asensin täysin uuden virtuaaliympäristön. Tähän ympäristöön asensin djangon.
 
         
+Seuraavaksi aloitan uuden projektin nimeltä `puttes`
+
+          (env) 19:39:43 fredrik@hiekkis:~/publicwsgi$ django-admin startproject puttes
+          CommandError: '/home/fredrik/publicwsgi/puttes' already exists
+          
+Jotta pääsen eroon virhekoodista poistan hakemiston `puttes` ja aloitan projektin uudestaan
+
+          
+          (env) 19:45:14 fredrik@hiekkis:~/publicwsgi$ django-admin startproject puttes
+          
+Jotta saan statisen sivun näkyviin apache2 palvelimelle luon uuden `index.html` tiedoston.
+
+          (env) 19:45:34 fredrik@hiekkis:~/publicwsgi/puttes$ mkdir -p static
+          (env) 19:46:22 fredrik@hiekkis:~/publicwsgi/puttes$ ls
+          manage.py  puttes  static
+          (env) 19:46:23 fredrik@hiekkis:~/publicwsgi/puttes$ cd static/
+          (env) 19:46:29 fredrik@hiekkis:~/publicwsgi/puttes/static$ ls
+          (env) 19:46:30 fredrik@hiekkis:~/publicwsgi/puttes/static$ micro index.html
+          
+<img width="324" alt="image" src="https://user-images.githubusercontent.com/122887178/221935658-759c547c-9d3e-48da-8a73-24dcfd66e1e6.png">
+
+### Yhteenveto
+
+Loin uuden django projektin nimellä `puttes`. Loin uuden statisen sivun sinne placeholderiksi. Jatkan apachen ja djangon yhdistämistä hyvin nukutun yön jälkeen.
 
 
 

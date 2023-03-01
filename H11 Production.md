@@ -6,7 +6,7 @@ Lähde: https://terokarvinen.com/2022/deploy-django/
 Tuotanto palvelimella käytetään modulia `mod.wsgi`
 
 Django palvelimen tuotantoasennukseen tarvitaan:
-- Linux tietokone, Itsellä on virtualhostin avulla asenettu virtuaalikone
+- Linux tietokone, Itsellä on virtualhostin avulla asennettu virtuaalikone
 - Apache2 webbipalvelin asenettuna virtuaalikoneelle
 Jos haluaa asentaa palvelimen julkiseen internettiin tarvitaan myös Virtual Private server. Itsellä on käytössä Linoden kautta vuokraamaa palvelin.
 
@@ -140,7 +140,9 @@ Jotta saan statisen sivun näkyviin apache2 palvelimelle luon uuden `index.html`
 
 ### Yhteenveto
 
-Loin uuden django projektin nimellä `puttes`. Loin uuden statisen sivun sinne placeholderiksi. Jatkan apachen ja djangon yhdistämistä hyvin nukutun yön jälkeen.
+Loin uuden django projektin nimellä `puttes`. Loin uuden statisen sivun apach2 webbipalvelimelle placeholderiksi. Jatkan apachen ja djangon yhdistämistä hyvin nukutun yön jälkeen.
+
+Jatkan tehtävää 3.3.
 
 
 

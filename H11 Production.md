@@ -292,9 +292,12 @@ Tämä kuitenkin aiheuttaa paljon ongelmia.
 
 Muokkasin järjestystä ja nyt suostui tekemään muutokset.
 
-Mutta tyylitykset eivät tule admin sivuille.
+Tyylitys Djangon sivuille on nyt enabloitu
+<img width="558" alt="image" src="https://user-images.githubusercontent.com/122887178/222674723-6d347201-8d7d-4261-aa0e-8dc326a55d1f.png">
 
-Paljon epäselvää vielä selvittämättä.
+
+Minulle jäi epäselväksi miksi `localhost` antaa virhekoodin "site forbidden".
+
 
 
 

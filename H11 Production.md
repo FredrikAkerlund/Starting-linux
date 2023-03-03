@@ -144,6 +144,162 @@ Loin uuden django projektin nimellä `puttes`. Loin uuden statisen sivun apach2 
 
 Jatkan tehtävää 3.3.
 
+Jatkan tehtävää 3.3 kl 0734
+
+Luon uuden käyttäjän joka ei ole SUDO ryhmässä
+
+          sudo adduser putte
+          
+Luon django projektille uuden käyttäjän nimellä `putte`
+
+          (env) 07:49:32 fredrik@hiekkis:~/publicwsgi/puttes$ ./manage.py createsuperuser
+          Username (leave blank to use 'fredrik'): putte
+          Email address: putte@putte.fi
+          Password: 
+          Password (again): 
+          Superuser created successfully.
+          
+Kokeilen että admin sivu toimii:
+- Käynnistän palvelimen
+
+          (env) 07:54:13 fredrik@hiekkis:~/publicwsgi/puttes$ ./manage.py runserver
+          
+- Kirjaudun äsken luomani käyttäjän kanssa palvelimelle
+
+          <img width="469" alt="image" src="https://user-images.githubusercontent.com/122887178/222643683-2982580e-2a0a-4e2c-afc2-5efd42d41f60.png">
+
+
+Palvelin toimii ja pystyn kirjautumaan admin sivulle.
+
+
+Mod_wsgi on moduli joka mahdollistaa apache palvelimen Python ohjelmistojen ajamisen.
+
+Käyttääksen mod_wsgi modulia muutan apache2 sivun .conf tiedostoa. Lähde: https://terokarvinen.com/2022/deploy-django/
+          
+          Define TDIR /home/fredrik/publicwsgi/puttes
+          #Directory copied from another terminal
+          Define TWSGI /home/fredrik/publicwsgi/puttes/puttes/wsgy.py
+          #WSGY.py file location
+          Define TUSER putte
+          #Our defined non SUDO user
+          Define TVENV /home/fredrik/publicwsgi/env/lib/python3.9/site-packages
+          #File location of virtualenv site package
+
+          <VirtualHost *:80>
+                  Alias /static/ ${TDIR}/static/
+                  <Directory ${TDIR}/static/>
+                          Require all granted
+                  </Directory>
+
+                  WSGIDaemonProcess ${TUSER} user=${TUSER} group=${TUSER} threads=5 python-path="${TDIR}:${TVENV}"
+                  WSGIScriptAlias / ${TWSGI}
+                  <Directory ${TDIR}>
+                       WSGIProcessGroup ${TUSER}
+                       WSGIApplicationGroup %{GLOBAL}
+                       WSGIScriptReloading On
+                       <Files wsgi.py>
+                          Require all granted
+                       </Files>
+                  </Directory>
+
+          </VirtualHost>
+
+          Undefine TDIR
+          Undefine TWSGI
+          Undefine TUSER
+          Undefine TVENV
+          
+Asennan apache wsgi modulin
+
+          08:25:41 fredrik@hiekkis:~$ sudo apt-get -y install libapache2-mod-wsgi-py3
+Potkaisen apache2 demonia ja käynnistän sen uudestaan
+
+          08:27:36 fredrik@hiekkis:~$ sudo systemctl restart apache2
+Tarkistan syntaxin myös
+
+          AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message
+          Syntax OK
+          
+Kokeilen toimiiko apache2 palvelin. Jotain on pielessä lähden etsimään vikaa.
+
+          08:33:26 fredrik@hiekkis:~$ curl localhost
+          <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+          <html><head>
+          <title>403 Forbidden</title>
+          </head><body>
+          <h1>Forbidden</h1>
+          <p>You don't have permission to access this resource.</p>
+          <hr>
+          <address>Apache/2.4.54 (Debian) Server at localhost Port 80</address>
+          </body></html>
+          
+          
+Kokeilen vianetsintää:
+
+          08:47:34 fredrik@hiekkis:~/publicwsgi/puttes/static$ sudo tail -1 /var/log/apache2/error.log
+          [Fri Mar 03 08:43:10.741737 2023] [authz_core:error] [pid 3794:tid 140432477533952] [client ::1:36892] AH01630: client denied by server configuration: /home/fredrik/publicwsgi/puttes/puttes/wsgy.py
+          
+Kuitenkin url localhost/static/ toimii
+
+<img width="222" alt="image" src="https://user-images.githubusercontent.com/122887178/222652926-24ea4725-bc99-43b1-8467-687e5696c55b.png">
+
+
+Tämä jäi avoimeksi kysymykseksi. Miksi localhost ei toimi mutta localhost/static/ toimii??
+
+Jatkan tehtävää kuitenkin.
+
+Käynnistän django palvelimen ja kokeilen selaimella että tätmä toimii:
+
+<img width="990" alt="image" src="https://user-images.githubusercontent.com/122887178/222655792-4900c344-6b13-4bb1-afed-841c9ef7c4d5.png">
+
+### Yhteenveto
+Moduli wsgi on nyt toiminassa ja django palvelin toimii.
+
+Debug asetuksien muuttaminen
+
+Muutan tiedostoa `settings.py` minun djangopalvelimen apissa.
+
+<img width="487" alt="image" src="https://user-images.githubusercontent.com/122887178/222656487-09d3bf69-3fee-4059-9ae5-b75282d98529.png">
+
+Jotta muutokset tulevat voimaan minun pitää aktivoida `wsgi.py` tiedosto. Samalla käynnistän apache2 demonin uudestaan
+
+          (env) 09:19:08 fredrik@hiekkis:~/publicwsgi/puttes/puttes$ touch wsgi.py 
+          (env) 09:19:12 fredrik@hiekkis:~/publicwsgi/puttes/puttes$ sudo systemctl restart apache2
+Kokeilen selaimella ja varmistan että debuggaus on pois päältä:
+
+<img width="273" alt="image" src="https://user-images.githubusercontent.com/122887178/222657265-2c25a7bf-41e0-48e8-8ca7-13e3ac865135.png">
+
+Kuitenkin kun käytän `curl localhost` niin näen mitä vikoja on palvelimessa.
+
+          (env) 09:23:01 fredrik@hiekkis:~/publicwsgi/puttes/puttes$ curl localhost
+          <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+          <html><head>
+          <title>403 Forbidden</title>
+          </head><body>
+          <h1>Forbidden</h1>
+          <p>You don't have permission to access this resource.</p>
+          <hr>
+          <address>Apache/2.4.54 (Debian) Server at localhost Port 80</address>
+          </body></html>
+          
+Tätä vikaa en ymmärrä.
+
+Lisään `settings.py` tiedostoon 
+
+<img width="614" alt="image" src="https://user-images.githubusercontent.com/122887178/222658829-9116c30f-7fcc-47ff-8d15-ce4a5453e49e.png">
+
+Tämä kuitenkin aiheuttaa paljon ongelmia.
+
+Muokkasin järjestystä ja nyt suostui tekemään muutokset.
+
+Mutta tyylitykset eivät tule admin sivuille.
+
+Paljon epäselvää vielä selvittämättä.
+
+
+
+
+
 
 
       

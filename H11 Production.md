@@ -244,16 +244,16 @@ Kuitenkin url localhost/static/ toimii
 <img width="222" alt="image" src="https://user-images.githubusercontent.com/122887178/222652926-24ea4725-bc99-43b1-8467-687e5696c55b.png">
 
 
-Tämä jäi avoimeksi kysymykseksi. Miksi localhost ei toimi mutta localhost/static/ toimii??
+Tämä jäi avoimeksi kysymykseksi. Miksi localhost ei toimi mutta localhost/static/ toimii?? ## Selvitin ongelman myöhemmässä vaiheessa
 
 Jatkan tehtävää kuitenkin.
 
-Käynnistän django palvelimen ja kokeilen selaimella että tätmä toimii:
+Käynnistän django palvelimen ja kokeilen selaimella että tämä toimii:
 
 <img width="990" alt="image" src="https://user-images.githubusercontent.com/122887178/222655792-4900c344-6b13-4bb1-afed-841c9ef7c4d5.png">
 
 ### Yhteenveto
-Moduli wsgi on nyt toiminassa ja django palvelin toimii.
+Moduli wsgi on nyt toiminassa ja django palvelin toimii. ## Todellisuudessa mod_wsgi ei ollut toiminassa
 
 Debug asetuksien muuttaminen
 
@@ -298,7 +298,25 @@ Tyylitys Djangon sivuille on nyt enabloitu
 
 Minulle jäi epäselväksi miksi `localhost` antaa virhekoodin "site forbidden".
 
+### Jatkoa jatkolle. Ongelma ratkesi
 
+Huomasin että `sites-available` tiedostossa oli kirjoitus virhe.
+
+<img width="791" alt="image" src="https://user-images.githubusercontent.com/122887178/222687742-81d7eed9-ddcd-4a31-b22d-0a6cf43f47fc.png">
+
+Define TWSGI /home/fredrik/publicwsgi/puttes/puttes/wsgi.py !!!!!!!!
+
+Kirjoitusvirhe oli hakemistopolun lopussa. Olin vahingossa kirjoittanut /wsgy.py
+
+### Yhteenveto
+
+Sain tehtävän suoritettua loppuun monen virheen kautta.
+
+![image](https://user-images.githubusercontent.com/122887178/222688488-938811d8-0e86-424c-baa0-cb96bb1ed2f5.png)
+
+Palvelin näytti pitkään toimivan mutta kun lähdin tarkastamaan oliko debuggaus pois päältä ihmettelin miksi `localhost` ja `localhost:8000` antoi eri vikakoodin. Avatessani Teron piirtämän mestariteoksen aloin ymmärtämään missä ongelma oli.
+
+Apache2 error loki antoi lopulta vastauksen missä ongelma oli. 
 
 
 

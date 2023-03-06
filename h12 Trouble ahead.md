@@ -9,7 +9,7 @@ Django palvelimella ei ole appeja luotu. Joten käyttäjälle on vain näkyviss�
 <img width="473" alt="image" src="https://user-images.githubusercontent.com/122887178/222955496-28c53d5b-c751-444c-ba7e-f4bfae40f17a.png">
 
 
-Asentaessa django tuotantopalvelinta minulla oli ongelmia että mod_wsgi moduli ei toiminut ja apache ei ollu yhteyttä Django palvelimelle. Tässä tehtävässä aloitan kirjoittamalla selvityksen mistä ongelma  johtui ja miten ratkaisin ongelman.
+Asentaessa django tuotantopalvelinta minulla oli ongelmia että mod_wsgi moduli ei toiminut ja apache weppipalvelimella ei ollut yhteyttä Django palvelimeen. Tässä tehtävässä aloitan kirjoittamalla selvityksen mistä ongelma  johtui ja miten ratkaisin ongelman.
 
 ### D) Kirjoitusvirhe apache2 konfiguraatio tiedostossa.
 
@@ -283,7 +283,7 @@ Seuraavat askeleet on tarkastaa error lokit jälleen kerran:
             [Sun Mar 05 17:16:33.113751 2023] [wsgi:error] [pid 3135:tid 140048697231104] [remote ::1:48896]     ALLOWED_HOSTS = [localhost]
             [Sun Mar 05 17:16:33.113785 2023] [wsgi:error] [pid 3135:tid 140048697231104] [remote ::1:48896] NameError: name 'localhost' is not defined
 
-Tämä antaa selkeän vastaukset ja vika löyty välittömästi.
+Tämä antaa selkeän vastauksen ja vika löyty välittömästi. Virhe loki ilmoittaa että virhe löytyy rivillä 28 tiedostossa `settings.py`. Lisäksi ne näyttää itse rivin [localhost]. Viimeisessä osassa virhelokia näkyy myös että `localhost` ei ole määritetty käyttäjäksi.
 
 Korjaan virheen ja kokeilen toimiiko apache2 webbipalvelin.
 
@@ -302,6 +302,130 @@ Korjaan virheen ja kokeilen toimiiko apache2 webbipalvelin.
 Ratkaisu oli helppo ja error loki antoi suoraan vastaukset miten korjaan ongelman.
 
 ### B) Django-projektikansio väärässä paikassa
+
+Aiheutan ongelman siirtämällä koko projektikansion eri paikkaan mitä konfiguraatiossa on määritelty
+
+            13:41:06 fredrik@hiekkis:~/publicwsgi$ mv puttes/ /home/fredrik/wronglocation
+Kokeilen `curl localhost` sanoo:
+
+            13:41:42 fredrik@hiekkis:~$ curl localhost
+            <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+            <html><head>
+            <title>403 Forbidden</title>
+            </head><body>
+            <h1>Forbidden</h1>
+            <p>You don't have permission to access this resource.</p>
+            <hr>
+            <address>Apache/2.4.54 (Debian) Server at localhost Port 80</address>
+            </body></html>
+            
+Menen jälleen kerran katsomaan virhelokeja:
+
+            13:47:36 fredrik@hiekkis:~$ sudo less /var/log/apache2/error.log
+Jostain syystä error loki on täysin tyhjä
+
+Varmistan että apache pyörii kuitenkin 
+
+            13:48:27 fredrik@hiekkis:~$ sudo systemctl status apache2
+            ● apache2.service - The Apache HTTP Server
+                 Loaded: loaded (/lib/systemd/system/apache2.service; enabled; vendor preset: enabled)
+                 Active: active (running) since Mon 2023-03-06 13:38:28 EET; 10min ago
+Toimii se. 
+
+Kokeilen configtestiä:
+
+            13:49:45 fredrik@hiekkis:~$ /sbin/apache2ctl configtest
+            AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message
+            Syntax OK
+Tämäkään ei näytä mitään vikaa.
+
+Tarkastan apache2.conf tiedoston että error loki on päällä
+
+            ErrorLog ${APACHE_LOG_DIR}/error.log
+            
+Siirrän Django projektikansion oikeaan paikkaan ja katson muuttuuko mikään.
+
+Apache palvelin toimii taas mutta toimiiko error.log?
+
+            13:57:13 fredrik@hiekkis:~/publicwsgi$ sudo tail /var/log/apache2/error.log
+            [Mon Mar 06 13:57:13.169081 2023] [mpm_event:notice] [pid 2647:tid 140611533954368] AH00489: Apache/2.4.54 (Debian) mod_wsgi/4.7.1 Python/3.9 configured -- resuming normal operations
+            [Mon Mar 06 13:57:13.169127 2023] [core:notice] [pid 2647:tid 140611533954368] AH00094: Command line: '/usr/sbin/apache2'
+Nyt se jälleen kerran toimii.
+
+Siirrän taas projektikansion mutta tämän jälkeen potkaisen apache2 demonia ja katson muuttuukko lokitiedot.
+
+            13:58:25 fredrik@hiekkis:~/publicwsgi$ mv puttes/ /home/fredrik/wronglocation
+            13:58:39 fredrik@hiekkis:~/publicwsgi$ ls
+            env  requirements.txt
+            13:58:40 fredrik@hiekkis:~/publicwsgi$ sudo systemctl restart apache2
+
+Curlaan localhost ja katson errorlokia:
+
+            13:58:57 fredrik@hiekkis:~/publicwsgi$ curl localhost
+            <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+            <html><head>
+            <title>403 Forbidden</title>
+            </head><body>
+            <h1>Forbidden</h1>
+            <p>You don't have permission to access this resource.</p>
+            <hr>
+            <address>Apache/2.4.54 (Debian) Server at localhost Port 80</address>
+            </body></html>
+            13:59:10 fredrik@hiekkis:~/publicwsgi$ sudo tail -2 /var/log/apache2/error.log
+           
+            [Mon Mar 06 13:58:53.298971 2023] [core:notice] [pid 2760:tid 140609443482944] AH00094: Command line: '/usr/sbin/apache2'
+            [Mon Mar 06 13:59:10.575787 2023] [authz_core:error] [pid 2763:tid 140609389799168] [client ::1:59852] AH01630: client denied by server configuration: /home/fredrik/publicwsgi/puttes
+            
+Noniin nyt päästään selvittämään vikaa. Kokeilen configtestiä antaako se lisää vihjeitä.
+
+            14:04:29 fredrik@hiekkis:~/publicwsgi$ /sbin/apache2ctl configtest
+            AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message
+            Syntax OK
+
+Tämäkään ei anna vinkkejä.
+
+Kuitenkin error lokissa näkyy että palvelin esti pääsyn tiedostopolkuun `/home/fredrik/publicwsgi/puttes`. Katson kyseista kansiota ja totean että sitä ei ole olemassa.
+
+            14:04:52 fredrik@hiekkis:~/publicwsgi$ ls /home/fredrik/publicwsgi/puttes
+            ls: cannot access '/home/fredrik/publicwsgi/puttes': No such file or directory
+        
+Etsin find komenolla `puttes` kansiota
+            
+            14:10:28 fredrik@hiekkis:~$ find ~ -type d -name "puttes"
+            /home/fredrik/wronglocation/puttes
+
+Näen että se on kirjaimellisesti väärässä paikassa. Korjaan sen
+
+            14:12:08 fredrik@hiekkis:~$ mv wronglocation/ /home/fredrik/publicwsgi/
+            14:13:08 fredrik@hiekkis:~$ ls
+            Desktop    Downloads  Music     Public      public_foo   publicwsgi  Videos
+            Documents  h3         Pictures  public_bar  public_html  Templates
+            14:13:10 fredrik@hiekkis:~$ cd publicwsgi/
+            14:13:19 fredrik@hiekkis:~/publicwsgi$ ls
+            env  requirements.txt  wronglocation
+            14:13:19 fredrik@hiekkis:~/publicwsgi$ mv wronglocation/ puttes
+            14:13:29 fredrik@hiekkis:~/publicwsgi$ ls
+            env  puttes  requirements.txt
+Potkaisen apache2 demonia ja katson toimiko tämä.
+
+            14:13:39 fredrik@hiekkis:~/publicwsgi$ sudo systemctl restart apache2
+            14:14:05 fredrik@hiekkis:~/publicwsgi$ curl localhost
+
+            <!doctype html>
+            <html lang="en">
+            <head>
+              <title>Not Found</title>
+              
+Tämähän toimi. Ongelma ratkaistu
+
+## Yhteenveto
+
+Tehtävä oli erittäin mielenkiintoinen. Muutama tehtävä jäi vähän "tylsäksi" koska tiesi missä ongelma oli ja virhelokit ei kertonut suoraan missä vika oli. En tiedä olisinko löytänyt vikaa jos en olisi tiennyt missä vika oli.
+
+
+
+
+            
 
 
 

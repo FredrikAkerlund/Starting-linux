@@ -303,6 +303,9 @@ Ratkaisu oli helppo ja error loki antoi suoraan vastaukset miten korjaan ongelma
 
 ### B) Django-projektikansio väärässä paikassa
 
+
+Jatkan tehtävää seuraavana päivänä kl 13.41
+
 Aiheutan ongelman siirtämällä koko projektikansion eri paikkaan mitä konfiguraatiossa on määritelty
 
             13:41:06 fredrik@hiekkis:~/publicwsgi$ mv puttes/ /home/fredrik/wronglocation

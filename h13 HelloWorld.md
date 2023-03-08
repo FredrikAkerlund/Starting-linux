@@ -112,6 +112,107 @@ Noin ikkääs on ohjelmat luotu ja tehty scripti.
 Tämän viikon tehtävä oli mielestäni erittäin helppo. Jatkan vaihtoehtoisia osioita myöhemällä ajalla.
 
 
+## Vapaaehtoinen osuus. Luo Greetme ohjelma
+
+Aloitan luomalla uuden kansion mihin lisään itse tehdyt ohjelmat. Luon kansion nimeltä `myprograms`
+
+          09:22:56 fredrik@hiekkis:~/koodit$ ls
+          helloc  hello.class  hello.java  hello.py  helloworld.sh  myprograms
+Kansioon luon python ohjelman joka vastaa `greetme` komentoon `Hello {user}`
+
+          #!/usr/bin/env python3
+
+          import os
+
+          user = os.getlogin()
+          print(f"Hello {user}!")
+          
+Koodi selitettynä:
+
+- import os = mahdollista ohjelman käsitellä käyttöjärjestelmää
+- user = os.getlogin () = Ohjelma hakee tiedon kuka on kirjautuneena järjestelmään
+- print(f"Hello {user}!") = Ohjelma tulostaa "Hello {kirjautunut käyttäjä[
+
+Kokeilen että ohjelma toimii kansiossa.
+
+          09:27:36 fredrik@hiekkis:~/koodit/myprograms$ python3 greetme.py 
+          Hello fredrik!
+Jotta ohjelma on käytettävissä kaikilla käyttäjillä kaikissa terminaaleissa muutan ohjelman oikeuksia ja lisään tiedoston`/usr/local/bin/greetme ` hakemistopolun oikeaan ohjelmaan.
+
+          09:27:42 fredrik@hiekkis:~/koodit/myprograms$ sudo micro /usr/local/bin/greetme
+          
+          #!/bin/bash
+
+          /home/fredrik/koodit/myprograms/greetme.py
+          
+          
+Kokeilen tässä vaiheessa mitä järjestelmä sanoo jos yritän ajaa ohjelmaa.
+
+          09:31:54 fredrik@hiekkis:~/koodit/myprograms$ greetme
+          bash: /usr/local/bin/greetme: Permission denied
+          
+Tästä voin vetää johtopäätökset että ohjelma on oikeassa paikassa mutta tiedoston oikeudet eivät ole kunnossa. Korjaan tämän
+
+          09:42:01 fredrik@hiekkis:~/koodit/myprograms$ chmod 755 -R /home/fredrik/koodit/myprograms/
+          09:42:11 fredrik@hiekkis:~/koodit/myprograms$ ls -l
+          total 4
+          -rwxr-xr-x 1 fredrik fredrik 80  8. 3. 09:17 greetme.py
+Kokeilen toimiiko ohjelma
+
+          09:42:12 fredrik@hiekkis:~/koodit/myprograms$ greetme
+          bash: /usr/local/bin/greetme: Permission denied
+          
+Eli oikeudet on vieläkin väärät. Tarkistan mitkä oikeudet ohjelmalla greetme hakemistossa `/user/local/bin/greetme ` on.
+
+          09:42:50 fredrik@hiekkis:~/koodit/myprograms$ ls -l /usr/local/bin |grep greetme
+          -rw-r--r-- 1 root root 57  8. 3. 09:31 greetme
+Tämä kertoo minulle että vain `Root` on oikeudet. Muutan oikeudet
+
+          09:47:37 fredrik@hiekkis:~/koodit/myprograms$ sudo chmod 755 /usr/local/bin/greetme 
+          09:47:43 fredrik@hiekkis:~/koodit/myprograms$ ls -l /usr/local/bin 
+          total 4
+          -rwxr-xr-x 1 root root 57  8. 3. 09:31 greetme
+Kokeilen toimiiko `greetme`
+                    
+          09:47:48 fredrik@hiekkis:~/koodit/myprograms$ greetme
+          Hello fredrik!
+          
+Sehän toimii.
+
+Teen ohjelmasta hieman mielenkiintoisemman:
+
+          #!/usr/bin/env python3
+
+          import os
+          import datetime
+
+          user = os.getlogin()
+
+          now = datetime.datetime.now()
+
+          formatted_date_time = now.strftime("%d.%m.%Y %H:%M")
+          print(f"Hello {user}!")
+          print(f"Päivämäärä ja kello: {formatted_date_time}")
+          print(f"Olet tällä hetkellä kansiossa: {os.getcwd()}")
+          
+Nyt ohjelma tulostaa seuraavat tiedot: 
+
+        10:37:20 fredrik@hiekkis:~/koodit/myprograms$ greetme
+          Hello fredrik!
+          Päivämäärä ja kello: 08.03.2023 10:37
+          Olet tällä hetkellä kansiossa: /home/fredrik/koodit/myprograms 
+          Muista verrytellä ja punnerella työn ohessa. Muuten backend hommat muuttuu hirmu raskaiksi
+
+
+## Yhteenveto
+
+Minun koodauskokemukseni on erittäin rajallinen. Olen vain suorittanut peruskurssin Javascriptistä ja siitä ei ole hirveästi hyötyä backend työskentelyssä.
+Kuitenkin Python kieli vaikuttaa logiselta ja odotan että pääsen suorittamaan lisää kursseja ja oikeasti oppimaan koodamaan Pythonilla.
+
+
+
+
+
 
 
 

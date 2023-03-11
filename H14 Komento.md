@@ -152,6 +152,25 @@ Teen ohjelman joka etsii tiedoston hakemistosta tai sen alihakemistoista.
 Lähde: https://www.tutorialspoint.com/file-searching-using-python
 
 
+Loin tiedoston käyttäjän omiin kansiohin `/home/fredrik/koodit/myprograms`
+
+Kopioin tämän tiedoston hakemistoon `sudo cp whereis /usr/local/bin`
+
+Vaihdan käyttöoikeudet tiedostolle `sudo chmod ugo+rx whereis`
+
+Kokeilen toimiiko ohjelma: 
+
+        22:29:55 fredrik@hiekkis:/$ whereis greetme
+        /usr/local/bin/greetme
+        22:30:13 fredrik@hiekkis:/$ whereis whereis.py
+        /home/fredrik/koodit/myprograms/whereis.py
+        22:30:28 fredrik@hiekkis:/$ whereis wäärätiedosto
+        Error: File not found: wäärätiedosto
+        22:30:37 fredrik@hiekkis:/$ 
+        
+Huomasin kun menin juurikansioon ja ajoin ohjelman että haussa kesti hieman aikaa. Tietysti koska tiedostoja oli enemmän haettavana.
+
+
 ### Bash scripti joka tekee jotain monelle tiedostolle.
 
 

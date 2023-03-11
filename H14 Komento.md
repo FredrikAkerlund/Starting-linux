@@ -1,7 +1,7 @@
 ## H14 Komento
 
 Viikon tehtävänä on luoda uusia komentoja linux terminaaliin. Tehtävänä on luoda bashilla ja pythonilla komento jota kaikki käyttäjät voivat käyttää.
-Viime viikon tehtävässä innostuin ja tein tämän tehtävän jo. Tämän viikon tehtäväksi teen saman mutta yritän hieman monimutkaistaa komentoa.
+Viime viikon tehtävässä innostuin ja tein tämän tehtävän jo.
 
 ### Viime viikon tehtävä:
 
@@ -46,6 +46,118 @@ Lähdekoodi:
         print(joke)
         #Tulostaa itse vitsin terminaaliin
         
+
+## Bashilla tehty komento
+
+Aloitan luomalla uuden tiedoston hakemistoon missä minulla on kaikki scriptini tallessa. Testaan sen välittömästi. Tiedostoon kirjoitan pelkästään `pwd`
+
+        21:17:19 fredrik@hiekkis:~/koodit/myprograms$ micro saluteme.sh
+        21:17:35 fredrik@hiekkis:~/koodit/myprograms$ bash saluteme.sh 
+        /home/fredrik/koodit/myprograms
+        21:18:05 fredrik@hiekkis:~/koodit/myprograms$ ^C
+
+Totean että tämä toimii.
+
+Muokkaan scriptin yksinkertaiseksi laskuriksi:
+
+        #!/bin/bash
+
+        echo Ensimäinen numero
+        read x
+        echo Toinen numero
+        read y
+        ((sum=x+y))
+        echo Laskutoimituksen tulos on $sum
+        
+Tulos: (huom muutin tiedoston nimen)
+
+        21:50:50 fredrik@hiekkis:~/koodit/myprograms$ micro calculator.sh 
+        21:51:29 fredrik@hiekkis:~/koodit/myprograms$ bash calculator.sh
+        Ensimäinen numero
+        1
+        Toinen numero
+        1
+        Laskutoimituksen tulos on 2
+        
+Seuraavaksi teen tiedoston kaikille käytettäväksi komennoksi:
+        
+        cp: cannot create regular file '/usr/local/bin/calculator.sh': Permission denied
+        21:53:48 fredrik@hiekkis:~/koodit/myprograms$ sudo cp calculator.sh /usr/local/bin/
+        21:54:00 fredrik@hiekkis:~/koodit/myprograms$ cd /usr/local/bin/
+        21:54:14 fredrik@hiekkis:/usr/local/bin$ ls
+        calculator.sh  chucknorris  greetme
+
+Muutan nimen niin että muistan nimen.
+
+Tarkistan oikeudet tiedostolle ja teen tarvittavat muutokset siten että omistajalla on RWX oikeudet ja muilla on R-X oikeudet:
+
+        21:55:56 fredrik@hiekkis:/usr/local/bin$ sudo chmod ugo+rx 
+        calculator   chucknorris  greetme      
+        21:55:56 fredrik@hiekkis:/usr/local/bin$ sudo chmod ugo+rx calculator 
+        21:56:22 fredrik@hiekkis:/usr/local/bin$ ls-l
+        bash: ls-l: command not found
+        21:56:24 fredrik@hiekkis:/usr/local/bin$ ls -l
+        total 12
+        -rwxr-xr-x 1 root root 118 11. 3. 21:54 calculator
+        -rwxr-xr-x 1 root root 232 10. 3. 16:17 chucknorris
+        -rwxr-xr-x 1 root root 612 10. 3. 16:24 greetme
+        21:56:27 fredrik@hiekkis:/usr/local/bin$ 
+        
+Kokeilen toimiiko scripti käyttäjällä:
+
+        21:56:27 fredrik@hiekkis:/usr/local/bin$ calculator 
+        Ensimäinen numero
+        1
+        Toinen numero
+        2
+        Laskutoimituksen tulos on 3
+        
+Toimiihan se. Muutan käyttäjää ja kokeilen sitten. 
+
+        21:56:56 fredrik@hiekkis:/usr/local/bin$ sudo su putte   
+        putte@hiekkis:/usr/local/bin$ calculator 
+        Ensimäinen numero
+        1
+        Toinen numero
+        2
+        Laskutoimituksen tulos on 3
+        putte@hiekkis:/usr/local/bin$ 
+        
+Toimiihan se. 
+
+### Python komento
+
+Teen ohjelman joka etsii tiedoston hakemistosta tai sen alihakemistoista.
+
+        #!/usr/bin/python3
+        import os
+        import sys
+        #Tuo tietoja järjestelmästä
+        if len(sys.argv) != 2:
+            print("Usage: {} <filename>".format(sys.argv[0]))
+            sys.exit(1)
+        #Tarkasta että komennon jälkeen tulee joku argumentti joka on vähintään 2 merkkiä pitkä
+        filename = sys.argv[1]
+        #määritä muuttujaksi "filename" käyttäjän syöte
+        for root, dirs, files in os.walk('.'):
+            if filename in files:
+                filepath = os.path.join(root, filename)
+                #Koodi käy läpi kaikki tiedostot siinä hakemistossa missä käyttäjä on.
+                print(os.path.realpath(filepath))
+                #Printtaa "realpath" tiedon löydetystä tiedostosta.
+                sys.exit(0)
+                #Lopettaa for loopin
+        print("Error: File not found: {}".format(filename))
+        # Kun scripti on käynnyt kaikki tiedostot läpi mutta ei löydä tiedostoa printtaa käyttäjän antaman syötteen.
+Lähde: https://www.tutorialspoint.com/file-searching-using-python
+
+
+### Bash scripti joka tekee jotain monelle tiedostolle.
+
+
+
+
+
 
 
 

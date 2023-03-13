@@ -173,6 +173,19 @@ Huomasin kun menin juurikansioon ja ajoin ohjelman että haussa kesti hieman aik
 
 ### Bash scripti joka tekee jotain monelle tiedostolle.
 
+Teen uuden bash script tiedoston ja lisään tiedostoon `echo moi` ja katson toimiiko se:
+
+                20:26:23 fredrik@hiekkis:~/koodit/myprograms$ bash testi.sh 
+                moi
+                
+En löytänyt mitään järkeviä ohjeita taikka neuvoja miten tekisin samanlaisen scriptin mitä Tero näytti tunnilla.
+
+Jätin viimeisen tehtävän tekemättä.
+
+
+
+
+
 
 
 
